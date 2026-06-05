@@ -80,4 +80,7 @@ Write-Host "        .\streamosos.bat" -ForegroundColor White
 Write-Host ""
 Write-Host "  - Скачать запись сразу по ссылке:" -ForegroundColor Cyan
 Write-Host '        .\streamosos.bat "https://my.mts-link.ru/.../record-new/123456789"' -ForegroundColor White
+Write-Host ""
+Write-Host "  - Нужна команда streamosos в консоли? Запусти activate.bat" -ForegroundColor Cyan
+Write-Host "    (откроется окно, где работает команда streamosos -i)" -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan

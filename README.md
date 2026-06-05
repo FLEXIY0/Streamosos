@@ -121,6 +121,24 @@ streamosos --version
 > Без активации окружения команда `streamosos` не найдётся — используй
 > запускатель `streamosos.bat` / `streamosos.sh` выше.
 
+### Нужна именно команда `streamosos` в консоли?
+
+- **Windows:** дважды кликни по **`activate.bat`** — откроется окно, где сразу
+  работает команда `streamosos` (PowerShell-политики при этом не мешают).
+- **Linux / macOS:** `source .venv/bin/activate`.
+
+## Решение проблем
+
+**PowerShell: «выполнение сценариев отключено в этой системе»** при попытке
+запустить `Activate.ps1`. Это политика безопасности Windows. Тебе **не нужно**
+активировать окружение вручную — просто используй `streamosos.bat` (двойной
+клик) или `activate.bat`. Если всё же хочешь включить запуск скриптов в
+PowerShell, выполни один раз:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
 ### Поддерживаемые форматы ссылок
 
 ```
@@ -149,6 +167,7 @@ Streamosos/
 │   └── utils.py         # логгер и вспомогательные функции
 ├── streamosos.bat       # запускатель для Windows (двойной клик)
 ├── streamosos.sh        # запускатель для Linux / macOS
+├── activate.bat         # консоль с включённой командой streamosos
 ├── bootstrap.ps1        # one-shot установка для PowerShell
 ├── setup.ps1 / setup.bat / setup.sh   # локальные сетап-скрипты
 └── pyproject.toml       # метаданные пакета и зависимости

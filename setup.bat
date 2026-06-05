@@ -75,6 +75,8 @@ echo     (откроется окно, куда можно вставлять с
 echo.
 echo   - Или скачать запись сразу по ссылке:
 echo       streamosos.bat "https://my.mts-link.ru/.../record-new/123456789"
+echo.
+echo   - Нужна команда streamosos в консоли? Запусти activate.bat
 echo ============================================================
 echo.
 pause
