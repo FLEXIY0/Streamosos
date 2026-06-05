@@ -1,8 +1,8 @@
 import logging
 import os
-import re
 
 from streamosos.downloader import construct_json_data_url, fetch_json_data
+from streamosos.parsing import sanitize_filename
 from streamosos.processor import compile_final_video, process_video_clips
 from streamosos.utils import create_directory_if_not_exists
 
@@ -10,12 +10,12 @@ from streamosos.utils import create_directory_if_not_exists
 def fetch_webinar_data(event_sessions: str, record_id: str, session_id=None, max_duration=None):
     json_data_url = construct_json_data_url(event_session_id=event_sessions, recording_id=record_id)
     json_data = fetch_json_data(url=json_data_url, session_id=session_id)
-    
+
     if not json_data:
         logging.error('Failed to fetch webinar data. Check the session ID or URL.')
         return
 
-    sanitized_name = re.sub(r'[\s\/:*?"<>|]+', '_', json_data['name'])
+    sanitized_name = sanitize_filename(json_data.get('name'))
     directory = create_directory_if_not_exists(sanitized_name)
     output_video_path = os.path.join(directory, f'{sanitized_name}.mp4')
 

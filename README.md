@@ -160,19 +160,33 @@ Cookies найдите значение `sessionId` для домена `my.mts-
 Streamosos/
 ├── streamosos/
 │   ├── __init__.py      # инициализация логгера, версия
-│   ├── cli.py           # точка входа, разбор аргументов, баннер
+│   ├── __main__.py      # поддержка `python -m streamosos`
+│   ├── cli.py           # точка входа, меню, разбор аргументов
+│   ├── parsing.py       # разбор ссылок и имён файлов (без тяжёлых зависимостей)
 │   ├── webinar.py       # оркестрация: получение данных и сборка видео
 │   ├── downloader.py    # HTTP-запросы и скачивание чанков
 │   ├── processor.py     # обработка/склейка через ffmpeg
 │   └── utils.py         # логгер и вспомогательные функции
+├── tests/               # юнит-тесты (pytest)
 ├── streamosos.bat       # запускатель для Windows (двойной клик)
 ├── streamosos.sh        # запускатель для Linux / macOS
 ├── activate.bat         # консоль с включённой командой streamosos
 ├── bootstrap.ps1        # one-shot установка для PowerShell
 ├── setup.ps1 / setup.bat / setup.sh   # локальные сетап-скрипты
+├── .github/workflows/ci.yml   # автотесты на GitHub Actions
 └── pyproject.toml       # метаданные пакета и зависимости
 ```
 
+## Разработка
+
+```bash
+pip install -e ".[dev]"  # установка с dev-зависимостями (pytest)
+pytest                  # запуск тестов
+python -m streamosos    # запуск без установленной команды
+```
+
+Тесты и сборка автоматически проверяются на GitHub Actions при каждом push и PR.
+
 ## Лицензия
 
-MIT
+MIT — см. файл [LICENSE](LICENSE).
