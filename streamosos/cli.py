@@ -2,12 +2,23 @@ import argparse
 import logging
 import re
 
-from mtslinker.webinar import fetch_webinar_data
+from streamosos import __version__
+from streamosos.webinar import fetch_webinar_data
+
+BANNER = r"""
+  ____  _
+ / ___|| |_ _ __ ___  __ _ _ __ ___   ___  ___  ___  ___
+ \___ \| __| '__/ _ \/ _` | '_ ` _ \ / _ \/ __|/ _ \/ __|
+  ___) | |_| | |  __/ (_| | | | | | | (_) \__ \ (_) \__ \
+ |____/ \__|_|  \___|\__,_|_| |_| |_|\___/|___/\___/|___/
+        MTS Link webinar downloader  v{version}
+"""
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description='mtslinker - tool for downloading MTS Link webinars.'
+        prog='streamosos',
+        description='Streamosos - tool for downloading MTS Link webinars.'
     )
     parser.add_argument(
         'url',
@@ -21,6 +32,11 @@ def parse_arguments():
     parser.add_argument(
         '--session-id',
         help='[Optional] sessionId token for accessing private recordings.'
+    )
+    parser.add_argument(
+        '--version',
+        action='version',
+        version=f'Streamosos {__version__}'
     )
     return parser.parse_args()
 
@@ -41,6 +57,7 @@ def extract_ids_from_url(url: str):
 def main():
     logging.basicConfig(level=logging.INFO)
     args = parse_arguments()
+    print(BANNER.format(version=__version__))
 
     url = args.url
     if not url:

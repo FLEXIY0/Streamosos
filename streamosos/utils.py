@@ -2,7 +2,7 @@ import logging
 import os
 
 LOGS_ROOT = 'logs'
-LOG_FILENAME = 'mtslinker.log'
+LOG_FILENAME = 'streamosos.log'
 LOG_FILEPATH = os.path.join(LOGS_ROOT, LOG_FILENAME)
 
 

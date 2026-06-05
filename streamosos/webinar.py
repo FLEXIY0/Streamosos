@@ -2,9 +2,9 @@ import logging
 import os
 import re
 
-from mtslinker.downloader import construct_json_data_url, fetch_json_data
-from mtslinker.processor import compile_final_video, process_video_clips
-from mtslinker.utils import create_directory_if_not_exists
+from streamosos.downloader import construct_json_data_url, fetch_json_data
+from streamosos.processor import compile_final_video, process_video_clips
+from streamosos.utils import create_directory_if_not_exists
 
 
 def fetch_webinar_data(event_sessions: str, record_id: str, session_id=None, max_duration=None):

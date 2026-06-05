@@ -4,7 +4,7 @@ import subprocess
 import tempfile
 from typing import Dict, Tuple, List, Union
 
-from mtslinker.downloader import download_video_chunk
+from streamosos.downloader import download_video_chunk
 
 
 def get_duration(path: str) -> float:
