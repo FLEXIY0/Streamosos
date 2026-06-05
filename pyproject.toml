@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mtslinker"
+name = "streamosos"
 version = "0.1.0"
-description = "CLI tool for downloading MTS Link (my.mts-link.ru) webinar recordings."
+description = "Streamosos - CLI tool for downloading MTS Link (my.mts-link.ru) webinar recordings."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
 authors = [{ name = "Streamosos" }]
-keywords = ["mts-link", "webinar", "downloader", "video", "ffmpeg"]
+keywords = ["streamosos", "mts-link", "webinar", "downloader", "video", "ffmpeg"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -29,11 +29,11 @@ dev = [
 ]
 
 [project.scripts]
-mtslinker = "mtslinker.cli:main"
+streamosos = "streamosos.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/flexiy0/streamosos"
 Repository = "https://github.com/flexiy0/streamosos"
 
 [tool.setuptools]
-packages = ["mtslinker"]
+packages = ["streamosos"]

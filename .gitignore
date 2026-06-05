@@ -16,7 +16,7 @@ venv/
 env/
 ENV/
 
-# Logs (created at runtime by mtslinker)
+# Logs (created at runtime by Streamosos)
 logs/
 
 # Downloaded webinars and intermediate media files

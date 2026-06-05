@@ -1,4 +1,4 @@
-# Runtime dependencies for mtslinker.
+# Runtime dependencies for Streamosos.
 # Note: ffmpeg/ffprobe must also be installed on the system (see README.md).
 httpx>=0.24
 tqdm>=4.64

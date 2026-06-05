@@ -1,4 +1,4 @@
-# mtslinker
+# Streamosos
 
 CLI-утилита для скачивания записей вебинаров с **МТС Линк** (`my.mts-link.ru`).
 Скрипт забирает все видео- и аудио-фрагменты записи, склеивает их через `ffmpeg`
@@ -9,84 +9,94 @@ CLI-утилита для скачивания записей вебинаров
 - Скачивание публичных записей по ссылке.
 - Скачивание приватных записей через `sessionId` (параметр `--session-id`).
 - Автоматическая склейка видео/аудио чанков в один файл.
-- Прогресс-бар загрузки и логирование в `logs/mtslinker.log`.
+- Прогресс-бар загрузки и логирование в `logs/streamosos.log`.
 
 ## Требования
 
 - **Python 3.8+**
 - **ffmpeg** и **ffprobe** в `PATH` (используются для склейки и анализа медиа).
 
-Проверить наличие ffmpeg:
-
-```bash
-ffmpeg -version
-ffprobe -version
-```
-
 Установка ffmpeg:
 
-| ОС            | Команда                                              |
-|---------------|------------------------------------------------------|
-| Ubuntu/Debian | `sudo apt-get install -y ffmpeg`                     |
-| Fedora        | `sudo dnf install -y ffmpeg`                         |
-| Arch          | `sudo pacman -S ffmpeg`                              |
-| macOS (brew)  | `brew install ffmpeg`                               |
+| ОС            | Команда                                                 |
+|---------------|---------------------------------------------------------|
 | Windows       | `winget install Gyan.FFmpeg` или `choco install ffmpeg` |
+| Ubuntu/Debian | `sudo apt-get install -y ffmpeg`                        |
+| Fedora        | `sudo dnf install -y ffmpeg`                            |
+| Arch          | `sudo pacman -S ffmpeg`                                 |
+| macOS (brew)  | `brew install ffmpeg`                                  |
 
-## Быстрый старт (setup из коробки)
+---
 
-Скрипт сам создаст виртуальное окружение, поставит зависимости и проверит ffmpeg.
+## 🚀 Установка в одну команду (paste-and-go)
 
-**Linux / macOS:**
+Открой **PowerShell** или **cmd**, вставь блок целиком — он сам создаст папку
+`Streamosos`, скачает код, поднимет виртуальное окружение и всё установит.
 
-```bash
-./setup.sh
+### PowerShell
+
+```powershell
+irm https://raw.githubusercontent.com/flexiy0/streamosos/main/bootstrap.ps1 | iex
 ```
 
-**Windows (cmd / PowerShell):**
+Либо вручную (если нет git — замени `git clone` на скачивание ZIP):
+
+```powershell
+git clone https://github.com/flexiy0/streamosos.git Streamosos
+cd Streamosos
+powershell -ExecutionPolicy Bypass -File setup.ps1
+.\.venv\Scripts\Activate.ps1
+```
+
+### cmd
 
 ```bat
-setup.bat
+git clone https://github.com/flexiy0/streamosos.git Streamosos && cd Streamosos && setup.bat
 ```
 
-После установки активируйте окружение:
+### Linux / macOS
 
 ```bash
-# Linux / macOS
-source .venv/bin/activate
-
-# Windows
-.venv\Scripts\activate
+git clone https://github.com/flexiy0/streamosos.git Streamosos && cd Streamosos && ./setup.sh && source .venv/bin/activate
 ```
+
+> После `setup` окружение готово — можно сразу запускать команду `streamosos`.
+
+---
 
 ## Ручная установка
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+python -m venv .venv
+# Windows (PowerShell): .venv\Scripts\Activate.ps1
+# Windows (cmd):        .venv\Scripts\activate
+# Linux / macOS:        source .venv/bin/activate
 pip install --upgrade pip
 pip install -e .
 ```
 
 ## Использование
 
-После установки доступна команда `mtslinker`:
+После установки доступна команда `streamosos`:
 
 ```bash
 # С указанием ссылки
-mtslinker "https://my.mts-link.ru/12345678/987654321/record-new/123456789"
+streamosos "https://my.mts-link.ru/12345678/987654321/record-new/123456789"
 
 # Запустить без аргументов — ссылку спросят интерактивно
-mtslinker
+streamosos
 
 # Приватная запись (нужен sessionId из cookie браузера)
-mtslinker "https://my.mts-link.ru/.../record-new/123456789" --session-id "ВАШ_SESSION_ID"
+streamosos "https://my.mts-link.ru/.../record-new/123456789" --session-id "ВАШ_SESSION_ID"
+
+# Версия
+streamosos --version
 ```
 
 Без установки пакета (из корня репозитория):
 
 ```bash
-python -m mtslinker.cli "https://my.mts-link.ru/.../record-new/123456789"
+python -m streamosos.cli "https://my.mts-link.ru/.../record-new/123456789"
 ```
 
 ### Поддерживаемые форматы ссылок
@@ -107,13 +117,17 @@ Cookies найдите значение `sessionId` для домена `my.mts-
 ## Структура проекта
 
 ```
-mtslinker/
-├── __init__.py      # инициализация логгера
-├── cli.py           # точка входа, разбор аргументов
-├── webinar.py       # оркестрация: получение данных и сборка видео
-├── downloader.py    # HTTP-запросы и скачивание чанков
-├── processor.py     # обработка/склейка через ffmpeg
-└── utils.py         # логгер и вспомогательные функции
+Streamosos/
+├── streamosos/
+│   ├── __init__.py      # инициализация логгера, версия
+│   ├── cli.py           # точка входа, разбор аргументов, баннер
+│   ├── webinar.py       # оркестрация: получение данных и сборка видео
+│   ├── downloader.py    # HTTP-запросы и скачивание чанков
+│   ├── processor.py     # обработка/склейка через ffmpeg
+│   └── utils.py         # логгер и вспомогательные функции
+├── bootstrap.ps1        # one-shot установка для PowerShell
+├── setup.ps1 / setup.bat / setup.sh   # локальные сетап-скрипты
+└── pyproject.toml       # метаданные пакета и зависимости
 ```
 
 ## Лицензия

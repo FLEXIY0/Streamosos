@@ -1,5 +1,5 @@
 @echo off
-REM Setup script for mtslinker (Windows).
+REM Setup script for Streamosos (Windows).
 REM Creates a virtual environment, installs the package and checks for ffmpeg.
 
 setlocal enabledelayedexpansion
@@ -35,7 +35,7 @@ REM --- 3. Install dependencies ------------------------------------------------
 echo ==^> Upgrading pip
 python -m pip install --upgrade pip >nul
 
-echo ==^> Installing mtslinker and its dependencies
+echo ==^> Installing streamosos and its dependencies
 python -m pip install -e .
 if errorlevel 1 (
     echo error: installation failed.
@@ -60,6 +60,6 @@ echo ==^> Setup complete!
 echo   Activate the environment with:
 echo       %VENV_DIR%\Scripts\activate
 echo   Then run:
-echo       mtslinker "https://my.mts-link.ru/.../record-new/123456789"
+echo       streamosos "https://my.mts-link.ru/.../record-new/123456789"
 
 endlocal

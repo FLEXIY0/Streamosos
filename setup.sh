@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Setup script for mtslinker (Linux / macOS).
+# Setup script for Streamosos (Linux / macOS).
 # Creates a virtual environment, installs the package and checks for ffmpeg.
 #
 set -euo pipefail
@@ -51,7 +51,7 @@ source "$VENV_DIR/bin/activate"
 info "Upgrading pip"
 python -m pip install --upgrade pip >/dev/null
 
-info "Installing mtslinker and its dependencies"
+info "Installing streamosos and its dependencies"
 python -m pip install -e .
 
 # --- 4. Check for ffmpeg / ffprobe -------------------------------------------
@@ -80,4 +80,4 @@ info "Setup complete!"
 echo "  Activate the environment with:"
 echo "      source $VENV_DIR/bin/activate"
 echo "  Then run:"
-echo "      mtslinker \"https://my.mts-link.ru/.../record-new/123456789\""
+echo "      streamosos \"https://my.mts-link.ru/.../record-new/123456789\""
