@@ -65,10 +65,20 @@ if "%MISSING_FFMPEG%"=="1" (
 
 REM --- 5. Done -----------------------------------------------------------------
 echo.
-echo ==^> Setup complete!
-echo   Activate the environment with:
-echo       %VENV_DIR%\Scripts\activate
-echo   Then run:
-echo       streamosos "https://my.mts-link.ru/.../record-new/123456789"
+echo ==^> Готово! Streamosos установлен.
+echo.
+echo ============================================================
+echo   КАК ЗАПУСТИТЬ:
+echo.
+echo   - Дважды кликни по файлу streamosos.bat в этой папке
+echo     (откроется окно, куда можно вставлять ссылки)
+echo.
+echo   - Или скачать запись сразу по ссылке:
+echo       streamosos.bat "https://my.mts-link.ru/.../record-new/123456789"
+echo.
+echo   - Нужна команда streamosos в консоли? Запусти activate.bat
+echo ============================================================
+echo.
+pause
 
 endlocal

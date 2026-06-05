@@ -84,8 +84,14 @@ fi
 
 # --- 5. Done -----------------------------------------------------------------
 echo
-info "Setup complete!"
-echo "  Activate the environment with:"
-echo "      source $VENV_DIR/bin/activate"
-echo "  Then run:"
-echo "      streamosos \"https://my.mts-link.ru/.../record-new/123456789\""
+info "Готово! Streamosos установлен."
+echo
+echo "============================================================"
+echo "  КАК ЗАПУСТИТЬ:"
+echo
+echo "  - Интерактивный режим (вставляй ссылки по одной):"
+echo "        ./streamosos.sh"
+echo
+echo "  - Скачать запись сразу по ссылке:"
+echo "        ./streamosos.sh \"https://my.mts-link.ru/.../record-new/123456789\""
+echo "============================================================"

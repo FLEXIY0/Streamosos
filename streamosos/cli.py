@@ -77,40 +77,94 @@ def download_one(url: str, session_id=None) -> bool:
     return False
 
 
+MENU = """
+==================================================
+            STREAMOSOS  -  главное меню
+==================================================
+
+   1  - Скачать запись  (просто вставь ссылку)
+   2  - Скачать приватную запись  (нужен sessionId)
+   3  - Помощь: где взять ссылку и sessionId
+   0  - Выход
+
+  Подсказка: можно сразу вставить ссылку и нажать Enter.
+"""
+
+HELP_TEXT = """
+  --- Где взять ССЫЛКУ ---
+    Открой нужную запись на my.mts-link.ru и скопируй адрес
+    из адресной строки браузера. Подходящий вид ссылки:
+        https://my.mts-link.ru/.../record-new/123456789
+
+  --- Где взять sessionId (только для приватных записей) ---
+    1) Открой запись в браузере, войдя в свой аккаунт.
+    2) Нажми F12 -> вкладка Application (Приложение) -> Cookies.
+    3) Найди значение sessionId для my.mts-link.ru и скопируй его.
+"""
+
+
+def handle_url(url: str, session_id=None):
+    """Validate a link, download it and print a human-friendly result."""
+    event_sessions, _ = extract_ids_from_url(url)
+    if not event_sessions:
+        print('\n  [!] Это не похоже на ссылку записи МТС Линк. Проверь и попробуй ещё раз.\n')
+        return
+
+    try:
+        ok = download_one(url, session_id=session_id)
+    except KeyboardInterrupt:
+        print('\n  Загрузка прервана.\n')
+        return
+    except Exception as exc:
+        logging.error(f'Ошибка при загрузке: {exc}')
+        return
+
+    if ok:
+        print('\n  [OK] Готово! Видео сохранено в папке с названием вебинара.\n')
+    else:
+        print('\n  [!] Не получилось скачать. Если запись приватная — выбери пункт 2 '
+              'и укажи sessionId.\n')
+
+
 def run_interactive(default_session_id=None):
-    """Interactive loop: ask for a link, download, repeat until the user quits."""
-    print('Интерактивный режим. Вставляй ссылки по одной.')
-    print("Команды: 'q' / 'exit' — выход.\n")
-
+    """Friendly menu-driven loop until the user chooses to exit."""
     while True:
+        print(MENU)
         try:
-            url = input('Ссылка на запись МТС Линк (q — выход): ').strip()
+            choice = input('  Твой выбор (0-3 или ссылка): ').strip()
         except (EOFError, KeyboardInterrupt):
-            print('\nВыход.')
+            print('\n  Выход.')
             break
 
-        if url.lower() in ('q', 'quit', 'exit'):
-            print('Выход.')
+        low = choice.lower()
+
+        if low in ('0', 'q', 'quit', 'exit', 'выход'):
+            print('  Выход. До встречи!')
             break
-        if not url:
-            continue
 
-        event_sessions, _ = extract_ids_from_url(url)
-        if not event_sessions:
-            logging.error('Неверный формат ссылки. Проверь URL.')
-            continue
+        # Пользователь сразу вставил ссылку — скачиваем без лишних вопросов.
+        if low.startswith('http'):
+            handle_url(choice, session_id=default_session_id)
 
-        session_id = default_session_id
-        if not session_id:
-            entered = input('sessionId для приватной записи (Enter — пропустить): ').strip()
-            session_id = entered or None
+        elif choice == '1':
+            url = input('  Вставь ссылку на запись и нажми Enter: ').strip()
+            if url:
+                handle_url(url, session_id=default_session_id)
 
-        try:
-            download_one(url, session_id=session_id)
-        except KeyboardInterrupt:
-            logging.warning('Загрузка прервана пользователем.')
-        except Exception as exc:
-            logging.error(f'Ошибка при загрузке: {exc}')
+        elif choice == '2':
+            url = input('  Вставь ссылку на запись: ').strip()
+            if not url:
+                continue
+            session_id = default_session_id
+            if not session_id:
+                session_id = input('  Вставь sessionId (или Enter, чтобы пропустить): ').strip() or None
+            handle_url(url, session_id=session_id)
+
+        elif choice == '3':
+            print(HELP_TEXT)
+
+        else:
+            print('\n  Не понял выбор. Введи 0, 1, 2 или 3 — или сразу вставь ссылку.\n')
 
 
 def main():
