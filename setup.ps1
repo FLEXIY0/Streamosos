@@ -37,6 +37,15 @@ $VenvPython = Join-Path $VenvDir "Scripts\python.exe"
 Info "Upgrading pip"
 & $VenvPython -m pip install --upgrade pip | Out-Null
 
+# Detect a previously installed Streamosos in this environment.
+$InstalledVersion = (& $VenvPython -m pip show streamosos 2>$null |
+    Where-Object { $_ -match '^Version:' }) -replace '^Version:\s*', ''
+if ($InstalledVersion) {
+    Info "Streamosos $InstalledVersion is already installed - updating it."
+} else {
+    Info "Streamosos is not installed yet - installing."
+}
+
 Info "Installing Streamosos and its dependencies"
 & $VenvPython -m pip install -e .
 if ($LASTEXITCODE -ne 0) { Fail "installation failed." }
