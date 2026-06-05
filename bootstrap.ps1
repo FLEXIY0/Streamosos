@@ -42,8 +42,20 @@ Info "Running setup..."
 & powershell -ExecutionPolicy Bypass -File (Join-Path $Target "setup.ps1")
 
 Write-Host ""
-Info "Streamosos is ready in: $Target"
-Write-Host "  Next steps:"
-Write-Host "      cd `"$Target`""
-Write-Host "      .\.venv\Scripts\Activate.ps1"
-Write-Host '      streamosos "https://my.mts-link.ru/.../record-new/123456789"'
+Info "Streamosos установлен в папку: $Target"
+Write-Host ""
+Write-Host "============================================================" -ForegroundColor Cyan
+Write-Host "  ЧТО ДЕЛАТЬ ДАЛЬШЕ:" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  1) Открой папку:  $Target" -ForegroundColor Cyan
+Write-Host "  2) Дважды кликни по файлу streamosos.bat" -ForegroundColor Cyan
+Write-Host "     -> откроется программа, вставляй ссылку на запись" -ForegroundColor Cyan
+Write-Host "============================================================" -ForegroundColor Cyan
+
+# Сразу запускаем программу, чтобы пользователю не пришлось ничего искать.
+$launcher = Join-Path $Target "streamosos.bat"
+if (Test-Path $launcher) {
+    Write-Host ""
+    Info "Запускаю Streamosos..."
+    & $launcher
+}

@@ -67,8 +67,17 @@ if ($MissingFfmpeg) {
 
 # --- 5. Done -----------------------------------------------------------------
 Write-Host ""
-Info "Setup complete!"
-Write-Host "  Activate the environment with:"
-Write-Host "      .\$VenvDir\Scripts\Activate.ps1"
-Write-Host "  Then run:"
-Write-Host '      streamosos "https://my.mts-link.ru/.../record-new/123456789"'
+Info "Готово! Streamosos установлен."
+Write-Host ""
+Write-Host "============================================================" -ForegroundColor Cyan
+Write-Host "  КАК ЗАПУСТИТЬ:" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  - Дважды кликни по файлу streamosos.bat в этой папке" -ForegroundColor Cyan
+Write-Host "    (откроется окно, куда можно вставлять ссылки)" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  - Или в этом окне выполни команду:" -ForegroundColor Cyan
+Write-Host "        .\streamosos.bat" -ForegroundColor White
+Write-Host ""
+Write-Host "  - Скачать запись сразу по ссылке:" -ForegroundColor Cyan
+Write-Host '        .\streamosos.bat "https://my.mts-link.ru/.../record-new/123456789"' -ForegroundColor White
+Write-Host "============================================================" -ForegroundColor Cyan
