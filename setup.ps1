@@ -5,6 +5,10 @@
 #     powershell -ExecutionPolicy Bypass -File setup.ps1
 
 $ErrorActionPreference = "Stop"
+# pip writes progress to stderr; don't let that abort the script on PS 7.4+.
+if (Get-Variable -Name PSNativeCommandUseErrorActionPreference -Scope Global -ErrorAction SilentlyContinue) {
+    $PSNativeCommandUseErrorActionPreference = $false
+}
 
 function Info($msg)  { Write-Host "==> $msg" -ForegroundColor Green }
 function Warn($msg)  { Write-Host "warning: $msg" -ForegroundColor Yellow }
