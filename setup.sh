@@ -51,6 +51,14 @@ source "$VENV_DIR/bin/activate"
 info "Upgrading pip"
 python -m pip install --upgrade pip >/dev/null
 
+# Detect a previously installed Streamosos in this environment.
+INSTALLED_VERSION="$(python -m pip show streamosos 2>/dev/null | sed -n 's/^Version: //p')"
+if [ -n "$INSTALLED_VERSION" ]; then
+    info "Streamosos $INSTALLED_VERSION is already installed - updating it."
+else
+    info "Streamosos is not installed yet - installing."
+fi
+
 info "Installing streamosos and its dependencies"
 python -m pip install -e .
 

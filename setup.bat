@@ -35,6 +35,15 @@ REM --- 3. Install dependencies ------------------------------------------------
 echo ==^> Upgrading pip
 python -m pip install --upgrade pip >nul
 
+REM Detect a previously installed Streamosos in this environment.
+set "INSTALLED_VERSION="
+for /f "tokens=2" %%v in ('python -m pip show streamosos 2^>nul ^| findstr /b "Version:"') do set "INSTALLED_VERSION=%%v"
+if defined INSTALLED_VERSION (
+    echo ==^> Streamosos %INSTALLED_VERSION% is already installed - updating it.
+) else (
+    echo ==^> Streamosos is not installed yet - installing.
+)
+
 echo ==^> Installing streamosos and its dependencies
 python -m pip install -e .
 if errorlevel 1 (
