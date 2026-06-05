@@ -37,3 +37,7 @@ Repository = "https://github.com/flexiy0/streamosos"
 
 [tool.setuptools]
 packages = ["streamosos"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

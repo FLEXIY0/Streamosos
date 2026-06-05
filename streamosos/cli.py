@@ -1,8 +1,8 @@
 import argparse
 import logging
-import re
 
 from streamosos import __version__
+from streamosos.parsing import extract_ids_from_url
 from streamosos.webinar import fetch_webinar_data
 
 BANNER = r"""
@@ -44,19 +44,6 @@ def parse_arguments():
         version=f'Streamosos {__version__}'
     )
     return parser.parse_args()
-
-
-def extract_ids_from_url(url: str):
-    url_pattern = (
-        r'^https://my\.mts-link\.ru/(?:[^/]+/)?\d+/\d+/record-new/(\d+)(?:/record-file/(\d+))?$'
-    )
-    match = re.match(url_pattern, url)
-    if match:
-        event_sessions = match.group(1)
-        record_id = match.group(2) if match.group(2) else None
-        return event_sessions, record_id
-
-    return None, None
 
 
 def download_one(url: str, session_id=None) -> bool:
@@ -168,7 +155,6 @@ def run_interactive(default_session_id=None):
 
 
 def main():
-    logging.basicConfig(level=logging.INFO)
     args = parse_arguments()
     print(BANNER.format(version=__version__))
 
